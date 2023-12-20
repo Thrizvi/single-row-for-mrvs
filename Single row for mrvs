@@ -1,0 +1,18 @@
+function onSubmit() {
+
+//for idrac and oob
+    var mrvs = g_service_catalog.parent.getValue('network1');
+    if (mrvs) {
+        var mrvsArray = JSON.parse(mrvs);
+
+        var selectedValue = g_form.getValue('type');
+
+        if (selectedValue == 'oob' || selectedValue == 'idrac') {
+            for (var i = 0; i < mrvsArray.length; i++) {
+                if (mrvsArray[i].type == selectedValue) {
+                    g_form.clearValue('type');
+                    g_form.addErrorMessage('Error: The same value ("' + selectedValue + '") is selected in consecutive rows for "type".');
+                    return false;
+                }
+            }
+        }
